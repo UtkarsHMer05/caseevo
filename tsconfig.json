@@ -27,7 +27,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/api/auth/[kindeAuth]/route.js"
+    "src/app/api/auth/[kindeAuth]/route.js",
+    "next.config.mjs"
   ],
   "exclude": ["node_modules"]
 }
