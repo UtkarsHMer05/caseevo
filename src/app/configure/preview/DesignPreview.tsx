@@ -7,12 +7,15 @@ import { cn, formatPrice } from "@/lib/utils";
 import { COLORS, MODELS } from "@/validator/option-validator";
 import { Configuration } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
-import { m } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Confetti from "react-dom-confetti";
+import { createCheckoutSession } from "./actions";
+import { toast } from "sonner";
 
 const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
+  const router = useRouter();
   const [showConfetti, setShowConfetti] = useState(false);
   useEffect(() => setShowConfetti(true));
   const { color, model, finish, material } = configuration;
@@ -33,8 +36,28 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
     totalPrice += PRODUCT_PRICES.finish.textured;
   }
 
-  const {} = useMutation({
+  const { mutate: createPaymentSession } = useMutation({
     mutationKey: ["get-checkout-session"],
+    mutationFn: createCheckoutSession,
+    onSuccess: ({ url }) => {
+      if (url) {
+        router.push(url);
+      } else {
+        throw new Error("Error creating checkout session");
+      }
+    },
+    onError: (error) => {
+      toast.error(
+        <span style={{ color: "black" }}>Something Went Wrong</span>,
+        {
+          description: (
+            <span style={{ color: "red" }}>
+              There was a problem at our end, please try again.
+            </span>
+          ),
+        }
+      );
+    },
   });
 
   return (
@@ -120,7 +143,12 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
               </div>
             </div>
             <div className="mt-8 flex justify-end pb-12 ">
-              <Button className="px-4 sm:px-6 lg:px-8">
+              <Button
+                onClick={() =>
+                  createPaymentSession({ configId: configuration.id })
+                }
+                className="px-4 sm:px-6 lg:px-8"
+              >
                 Check out{" "}
                 <ArrowRight className="h-4 w-4 ml-1.5 inline"></ArrowRight>
               </Button>
