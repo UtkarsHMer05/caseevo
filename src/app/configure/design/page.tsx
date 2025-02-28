@@ -30,14 +30,12 @@ interface PageProps {
  * The Page function is an async component that loads configuration data based on the query parameter "id".
  * It's written as an async function so we can await database requests.
  */
-const Page = async ({ searchParams }: PageProps) => {
-  // Destructure the "id" from searchParams.
-  // The id should be present in the URL query (e.g., /configure/design?id=someId).
-  const { id } = searchParams;
+export default async function Page({ searchParams }: PageProps) {
+  // Await the searchParams before using its properties
+  const { id } = await searchParams;
 
-  // Check if id is not provided or if it is not a string.
-  // If it's missing or not in the expected format, return a 404 page.
   if (!id || typeof id !== "string") {
+    // Handle missing or invalid id
     return notFound();
   }
 
@@ -70,8 +68,4 @@ const Page = async ({ searchParams }: PageProps) => {
       imageUrl={imageUrl}
     />
   );
-};
-
-// Export the Page component as default.
-// This is the main component for the /configure/design route.
-export default Page;
+}
