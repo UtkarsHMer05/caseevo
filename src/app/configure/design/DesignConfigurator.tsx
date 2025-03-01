@@ -73,7 +73,7 @@ const DesignConfigurator = ({
 
   // useMutation is used for saving configuration.
   // It runs saveConfiguration and then _saveConfig.
-  const { mutate: saveConfig } = useMutation({
+  const { mutate: saveConfig, isPending } = useMutation({
     mutationKey: ["saveConfig"],
     // This function will try to save the configuration.
     mutationFn: async (args: SaveConfigArgs) => {
@@ -484,6 +484,9 @@ const DesignConfigurator = ({
                 )}
               </p>
               <Button
+                isLoading={isPending}
+                disabled={isPending}
+                LoadingText="Saving..."
                 onClick={() =>
                   saveConfig({
                     configId,

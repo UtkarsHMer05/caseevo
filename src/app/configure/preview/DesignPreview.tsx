@@ -192,11 +192,11 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
         Tailwind classes:
           - "mt-20": Margin top of 5rem.
           - "grid": Uses a CSS grid for layout.
-          - "grid-cols-1": Single column layout on extra small screens.
           - "text-sm": Small base font size.
           - Responsive grid settings (sm, md, lg): Adjust columns and gaps based on screen size.
       */}
-      <div className="mt-20 grid grid-cols-1 text-sm sm:grid-cols-12 sm:grid-rows-12 sm:gap-x-6 md:gap-x-8 lg:gap-x-12">
+
+      <div className="mt-20 flex flex-col md:grid text-sm sm:grid-cols-12 sm:grid-rows-12 sm:gap-x-6 md:gap-x-8 lg:gap-x-12">
         {/*
           Column for the phone preview.
           Tailwind classes:
@@ -205,14 +205,14 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
             - "md:row-span-2": On medium screens, the element spans 2 rows.
             - "md:row-end-2": Ends at row 2 on medium screens.
         */}
-        <div className="sm:col-span-4 md:col-span-3 md:row-span-2 md:row-end-2">
+        <div className="md:col-span-4 lg:col-span-3 md:row-span-2 md:row-end-2">
           {/*
             <Phone> component renders the phone case image.
             The "className" is generated using the "cn" helper function.
             Here, `bg-${tw}` dynamically applies a background color based on the selected color.
           */}
           <Phone
-            className={cn(`bg-${tw}`)}
+            className={cn(`bg-${tw}`, "max-w-[150px] md:max-w-full")}
             imgSrc={configuration.croppedImageUrl!}
           />
         </div>
@@ -225,7 +225,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
             - "sm:mt-0": Reset top margin to 0 on small screens.
             - "md:row-end-1": Ends at the first row on medium screens.
         */}
-        <div className="mt-6 sm:col-span-9 sm:mt-0 md:row-end-1">
+        <div className="mt-6 sm:col-span-9 md:row-end-1">
           {/*
             Heading for the case preview.
             Tailwind classes:
