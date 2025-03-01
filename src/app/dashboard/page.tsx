@@ -20,7 +20,7 @@ import {
 import { db } from "@/db"; // Database connection
 import { formatPrice } from "@/lib/utils"; // Helper function to display numbers as money
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server"; // Gets user session
-import { notFound } from "next/navigation"; // Shows a "not found" page if needed
+import { notFound, redirect } from "next/navigation"; // Shows a "not found" page if needed
 import StatusDropdown from "./StatusDropdown"; // A small component to pick order status
 
 const Page = async () => {
@@ -31,9 +31,9 @@ const Page = async () => {
   // This sets the special admin email from environment variables
   const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
-  // If there is no user or user is not admin, show "not found"
+  // If there is no user or user is not admin, redirect to home page
   if (!user || user.email !== ADMIN_EMAIL) {
-    return notFound();
+    return redirect("/");
   }
 
   // Fetches paid orders from the past 7 days; sorts them by newest first
