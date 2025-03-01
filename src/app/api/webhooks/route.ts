@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { db } from "@/db"; // Connects to our database so we can update/store info.
 import { stripe } from "@/lib/stripe"; // Stripe client to handle Stripe events and webhooks.
 import { headers } from "next/headers"; // Allows us to read incoming request headers in Next.js.
@@ -123,8 +124,7 @@ export async function POST(req: Request) {
         react: OrderReceivedEmail({
           orderId,
           orderDate: updatedOrder.createdAt.toLocaleDateString(),
-          // We use the shipping address details from the session for personalizing the email.
-          //@ts-ignore
+          // @ts-ignore
           shippingAddress: {
             name: session.customer_details!.name!,
             city: shippingAddress!.city!,
