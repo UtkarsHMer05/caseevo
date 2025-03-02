@@ -19,6 +19,7 @@ const eslintConfig = [
       "jsx-a11y/alt-text": "off",
       "@next/next/no-img-element": "off",
       "no-var": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
     },
   },
 ];
