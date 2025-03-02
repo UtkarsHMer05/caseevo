@@ -42,3 +42,5 @@ export const changeOrderStatus = async ({
     data: { status: newStatus },
   });
 };
+
+// We export the function so it can be used elsewhere in our app.
